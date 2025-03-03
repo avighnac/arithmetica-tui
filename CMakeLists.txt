@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.5)
 
 project(arithmetica-tui)
 
+if(APPLE)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "Build for x86_64" FORCE)
+endif()
+
 enable_language(CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

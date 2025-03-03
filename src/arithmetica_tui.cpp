@@ -797,14 +797,17 @@ int arithmetica_tui(int argc, char **argv, std::istream &instream_,
         bool done = false;
         for (int j = 0; j < terms.size(); ++j) {
           terms[j] = terms[j].simplify_term();
-          auto var = *terms[j].r;
-          auto frac = terms[j].l->coeff;
-          std::string v_str = var.to_string();
-          if (vars.find(v_str) != vars.end()) {
-            mat[i][vars[v_str]] = frac;
+          std::string v_str;
+          if (!terms[j].is_numeric()) {
+            auto var = *terms[j].r;
+            std::string v_str = var.to_string();
+            auto frac = terms[j].l->coeff;
+            if (vars.find(v_str) != vars.end()) {
+              mat[i][vars[v_str]] = frac;
+            }
           } else {
             done = true;
-            std::vector<Fraction> v = {frac * "-1"};
+            std::vector<Fraction> v = {terms[j].coeff * "-1"};
             consts.push_back(v);
           }
         }
